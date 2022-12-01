@@ -50,16 +50,16 @@ SPACE = "space"
 ENTER = "enter"
 PAUSE = "p"
 
-# SCENES - the different screens used during game play
-NEW_GAME = 0
-TRY_AGAIN = 1
-NEXT_LEVEL = 2
-IN_PLAY = 3
-GAME_OVER = 4
+# SCENES - numbers assigned to the different screens in game play for easy use as a parameter in the director class method
+NEW_GAME = 0 #the screen for a new game
+TRY_AGAIN = 1 #the screen asking the player if they want to try again
+NEXT_LEVEL = 2 #the screen for the next level of play
+IN_PLAY = 3 
+GAME_OVER = 4 #the screen for when the game ends
 
 # LEVELS - the file directory to the level data
-LEVEL_FILE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/data/level-{:03}.txt"
-BASE_LEVELS = 5
+LEVEL_FILE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/data/level-{:03}.txt" #the file directory for the level foundation text
+BASE_LEVELS = 5 
 
 # -------------------------------------------------------------------------------------------------- 
 # SCRIPTING CONSTANTS
