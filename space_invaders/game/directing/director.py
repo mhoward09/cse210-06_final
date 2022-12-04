@@ -30,7 +30,7 @@ class Director(ActionCallback):
 
     def start_game(self):
         """Starts the game. Runs the main game loop."""
-        self.on_next(NEW_GAME) #calls the director on_nest method from above given the parameter for the new game screen to be displayed
+        self.on_next(NEW_GAME) #calls the director on_next method from above given the parameter for the new game screen to be displayed
         self._execute_actions(INITIALIZE) #calls the _execute_actions method from below given the parameter Initialize to call the group of script actions to initialize or begin the raylib audio and video services of the game -- it opens the window and prepares the sounds of the game played through the raylib library
         self._execute_actions(LOAD)
         while self._video_service.is_window_open():

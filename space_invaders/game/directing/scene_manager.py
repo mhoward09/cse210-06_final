@@ -13,66 +13,86 @@ from game.casting.racket import Racket #imports the Racket class - convert to sh
 from game.casting.stats import Stats #imports the Stats class - manages player lives
 from game.casting.text import Text #imports the Text class - manages the text displaying in the HUD and on screen
 from game.scripting.scene_actions.change_scene_action import ChangeSceneAction #imports the ChangeSceneAction class - changes the screen when ENTER is pressed
-from game.scripting.scene_actions.check_over_action import CheckOverAction #imports the CheckOverAction - 
-from game.scripting.collision_actions.collide_borders_action import CollideBordersAction
-from game.scripting.collision_actions.collide_brick_action import CollideBrickAction
-from game.scripting.collision_actions.collide_racket_action import CollideRacketAction
-from game.scripting.control_actions.control_racket_action import ControlRacketAction
-from game.scripting.drawing_actions.draw_ball_action import DrawBallAction
-from game.scripting.drawing_actions.draw_bricks_action import DrawBricksAction
-from game.scripting.drawing_actions.draw_dialog_action import DrawDialogAction
-from game.scripting.drawing_actions.draw_hud_action import DrawHudAction
-from game.scripting.drawing_actions.draw_racket_action import DrawRacketAction
-from game.scripting.drawing_actions.end_drawing_action import EndDrawingAction
-from game.scripting.game_start_actions.initialize_devices_action import InitializeDevicesAction
-from game.scripting.game_start_actions.load_assets_action import LoadAssetsAction
-from game.scripting.movement_actions.move_ball_action import MoveBallAction
-from game.scripting.movement_actions.move_racket_action import MoveRacketAction
-from game.scripting.sound_actions.play_sound_action import PlaySoundAction
-from game.scripting.game_end_actions.release_devices_action import ReleaseDevicesAction
-from game.scripting.drawing_actions.start_drawing_action import StartDrawingAction
-from game.scripting.scene_actions.timed_change_scene_action import TimedChangeSceneAction
-from game.scripting.game_end_actions.unload_assets_action import UnloadAssetsAction
-from game.services.raylib.raylib_audio_service import RaylibAudioService
-from game.services.raylib.raylib_keyboard_service import RaylibKeyboardService
-from game.services.raylib.raylib_physics_service import RaylibPhysicsService
-from game.services.raylib.raylib_video_service import RaylibVideoService
+from game.scripting.scene_actions.check_over_action import CheckOverAction #imports the CheckOverAction - checks the cast list of aliens, if it is empty it signals to move to the next level
+from game.scripting.collision_actions.collide_borders_action import CollideBordersAction #imports the CollideBordersAction which detects if the ball touches an edge of the screen and if it does what happens (a bounce or a loss) - we won't have bouncing but we will need to detect collision with the bottom to detect a loss and the starting point for the aliens will need to be under the HUD area
+from game.scripting.collision_actions.collide_brick_action import CollideBrickAction #imports the CollideBrickAction class which detects if the ball hits a brick causing the ball to bounce the brick to be removed and the points to be added to the score - we will not need the bounce but score will need to be added and alien/brick removed upon the collision of a bullet with an alien
+from game.scripting.collision_actions.collide_racket_action import CollideRacketAction #imports the CollideRacketAction which handles the ball hitting the racket and bouncing - this will be adjusted to a bullet hitting the ship and triggering a loss
+from game.scripting.control_actions.control_racket_action import ControlRacketAction #this imports the ControlRacketAction class which manages the key input to control the racket for play - this will need to be converted to the control ship action which will move the ship left and right and fire bullets
+from game.scripting.drawing_actions.draw_ball_action import DrawBallAction #imports the DrawBallAction class that include the code to display the ball on the screen - will need to be converted to bullet
+from game.scripting.drawing_actions.draw_bricks_action import DrawBricksAction #imports the DrawBricksAction class that is the code to display the bricks - will need to be converted to aliens
+from game.scripting.drawing_actions.draw_dialog_action import DrawDialogAction #imports the DrawDialog action class which is responsible for displaying the messages in the middle of the screen (count down to level start)
+from game.scripting.drawing_actions.draw_hud_action import DrawHudAction #imports the DrawHusActions class responsible for displaying the HUD at the top of the screen
+from game.scripting.drawing_actions.draw_racket_action import DrawRacketAction #imports the DrawRacketAction class responsible for displaying the racket to the screen - will need to be converted to the ship
+from game.scripting.drawing_actions.end_drawing_action import EndDrawingAction #imports the EndDrawingAction class responsible for clearing the screen in preparation for the next screen
+from game.scripting.game_start_actions.initialize_devices_action import InitializeDevicesAction #imports the InitializeDevicesAction responsible for starting the video and sound services for game play
+from game.scripting.game_start_actions.load_assets_action import LoadAssetsAction #imports the LoadAssetsAction responsible for loading the level data, images and sounds for game play
+from game.scripting.movement_actions.move_ball_action import MoveBallAction #imports MoveBallAction responsible for the movement of the ball from frame to frame - to be converted to bullet
+from game.scripting.movement_actions.move_racket_action import MoveRacketAction #imports MoveRacketAction responsible for movement of racket from frame to frame - to be converted to ship
+from game.scripting.sound_actions.play_sound_action import PlaySoundAction #imports PlaySoundAction responsible for playing a given sound when called
+from game.scripting.game_end_actions.release_devices_action import ReleaseDevicesAction #imports ReleaseDevicesAcion responsible for ending the video and sound services when game is closed
+from game.scripting.drawing_actions.start_drawing_action import StartDrawingAction #imports StartDrawingAction responsible for starting the display of game items
+from game.scripting.scene_actions.timed_change_scene_action import TimedChangeSceneAction #imports TimedChangeSceneAction responsible for changing the scene based on a time delay (for the count down to the start of the level)
+from game.scripting.game_end_actions.unload_assets_action import UnloadAssetsAction #import UnloadAssestsAction responsible for releasing the memory buffer holding the loaded assets when the game screen is closed
+from game.services.raylib.raylib_audio_service import RaylibAudioService #imports the audio service class used to produce sounds for game play
+from game.services.raylib.raylib_keyboard_service import RaylibKeyboardService #imports the keyboard service class used to convert keyboard input into game actions
+from game.services.raylib.raylib_physics_service import RaylibPhysicsService #imports the physics service to manage the physics and bouncing of the ball - unnecessary for invaders game
+from game.services.raylib.raylib_video_service import RaylibVideoService #imports the video service to open the and manage the game screen and displays
 
 #scene manager class
 class SceneManager:
     """The person in charge of setting up the cast and script for each scene."""
-    
-    AUDIO_SERVICE = RaylibAudioService()
-    KEYBOARD_SERVICE = RaylibKeyboardService()
-    PHYSICS_SERVICE = RaylibPhysicsService()
-    VIDEO_SERVICE = RaylibVideoService(GAME_NAME, SCREEN_WIDTH, SCREEN_HEIGHT)
 
+    #these are attribute references - similar to global constants but only for this class
+
+    #service references
+    AUDIO_SERVICE = RaylibAudioService() #assigns the attribute reference for the audio service class
+    KEYBOARD_SERVICE = RaylibKeyboardService() #assigns the attribute reference for the keyboard service class
+    PHYSICS_SERVICE = RaylibPhysicsService() #assign the attribute reference for the physics service - unnecessary for invaders game
+    VIDEO_SERVICE = RaylibVideoService(GAME_NAME, SCREEN_WIDTH, SCREEN_HEIGHT) #assings the attribute reference for the video service
+
+    #action references
+
+    #scene references
     CHECK_OVER_ACTION = CheckOverAction()
+
+    #collision references
     COLLIDE_BORDERS_ACTION = CollideBordersAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_BRICKS_ACTION = CollideBrickAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_RACKET_ACTION = CollideRacketAction(PHYSICS_SERVICE, AUDIO_SERVICE)
+
+    #game control references
     CONTROL_RACKET_ACTION = ControlRacketAction(KEYBOARD_SERVICE)
+
+    #drawing/display references
     DRAW_BALL_ACTION = DrawBallAction(VIDEO_SERVICE)
     DRAW_BRICKS_ACTION = DrawBricksAction(VIDEO_SERVICE)
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
     DRAW_RACKET_ACTION= DrawRacketAction(VIDEO_SERVICE)
     END_DRAWING_ACTION = EndDrawingAction(VIDEO_SERVICE)
+    START_DRAWING_ACTION = StartDrawingAction(VIDEO_SERVICE)
+
+    #game start up references
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     LOAD_ASSETS_ACTION = LoadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
+
+    #movement references
     MOVE_BALL_ACTION = MoveBallAction()
     MOVE_RACKET_ACTION = MoveRacketAction()
+
+    #game closing refernces
     RELEASE_DEVICES_ACTION = ReleaseDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
-    START_DRAWING_ACTION = StartDrawingAction(VIDEO_SERVICE)
     UNLOAD_ASSETS_ACTION = UnloadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
 
     def __init__(self):
-        pass
+        pass #all attributes were referenced above and thus will not be in the init statement and will not require the "self." to be called
 
     def prepare_scene(self, scene, cast, script):
-        if scene == NEW_GAME:
+        """function to determine what scene to prepare next"""
+        #each scene was assigned a number in the constants file for easy boolean comparison
+        if scene == NEW_GAME: 
             self._prepare_new_game(cast, script)
-        elif scene == NEXT_LEVEL:
+        elif scene == NEXT_LEVEL: 
             self._prepare_next_level(cast, script)
         elif scene == TRY_AGAIN:
             self._prepare_try_again(cast, script)
