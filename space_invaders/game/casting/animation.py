@@ -7,7 +7,6 @@ from constants import *
 #import necessary classes
 from game.casting.image import Image #imports the Image class to use for the animation frames
 
-
 class Animation:
     """An animation."""
     
