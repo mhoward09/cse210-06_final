@@ -2,16 +2,16 @@ from constants import *
 from game.scripting.action import Action
 
 
-class ControlRacketAction(Action):
+class ControlShipAction(Action):
 
     def __init__(self, keyboard_service):
         self._keyboard_service = keyboard_service
         
     def execute(self, cast, script, callback):
-        racket = cast.get_first_actor(RACKET_GROUP)
+        ship = cast.get_first_actor(SHIP_GROUP)
         if self._keyboard_service.is_key_down(LEFT): 
-            racket.swing_left()
+            ship.swing_left()
         elif self._keyboard_service.is_key_down(RIGHT): 
-            racket.swing_right()  
+            ship.swing_right()  
         else: 
-            racket.stop_moving()        
+            ship.stop_moving()        
