@@ -16,11 +16,11 @@ SCREEN_HEIGHT = 680 #the chosen height of the game window in pixels
 CENTER_X = SCREEN_WIDTH / 2 #the graphical half way point in the width, the x component of the center point of the game window
 CENTER_Y = SCREEN_HEIGHT / 2 #the graphical half way point in the height, the y component of the center point of the game window
 
-# FIELD 
-FIELD_TOP = 60 
-FIELD_BOTTOM = SCREEN_HEIGHT 
-FIELD_LEFT = 0
-FIELD_RIGHT = SCREEN_WIDTH
+# FIELD - determines the field of play where the ball is able to move, we need this for the bounds of the ship and the aliens rather than the ball/bullet class
+FIELD_TOP = 60 #the top of the ball's play area - 60 pixels from the top of the screen to allow for the HUD
+FIELD_BOTTOM = SCREEN_HEIGHT #the bottom of the play area - the bottom of the screen - point (0,0) is the upper left corner of the screen
+FIELD_LEFT = 0 #the left side of the play screen
+FIELD_RIGHT = SCREEN_WIDTH #the right side of the play screen
 
 # FONT - the font used for the game
 FONT_FILE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/fonts/zorque.otf" #file that contains the font for the printed items on the screen
@@ -92,34 +92,34 @@ LEVEL_FORMAT = "LEVEL: {}" #the displaying of the level being played
 LIVES_FORMAT = "LIVES: {}" #the displaying of the number of live the player has
 SCORE_FORMAT = "SCORE: {}" #the displaying of the player's score
 
-# BALL - The constants for the ball class which will be converted to the bullet class
-BALL_GROUP = "balls" #the cast group for the ball - converted to bullet
-BALL_IMAGE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/images/000.png" #file for ball image - convert to bullet
-BALL_WIDTH = 28 #width of ball image - convert to bullet
-BALL_HEIGHT = 28 #height of ball image - convert to bullet
-BALL_VELOCITY = 6 #speed of the ball in frames - convert to bullet -- bullets only move up or down based on who fired them (positive or negative y dimension) 
+# BULLET - The constants for the bullet class 
+BULLET_GROUP = "bullets" #the cast group for the bullet 
+BULLET_IMAGE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/images/000.png" #file for bullet image 
+BULLET_WIDTH = 28 #width of bullet image
+BULLET_HEIGHT = 28 #height of bullet image
+BULLET_VELOCITY = 6 #speed of the bullet in frames -- bullets only move up or down based on who fired them (positive or negative y dimension) 
 
-# RACKET - the constants for the racket class - convert to ship class
-RACKET_GROUP = "rackets" #the cast group for rackets - convert to ship
-RACKET_IMAGES = [f"batter/assets/images/{n:03}.png" for n in range(100, 103)] #the file path for the racket image - convert to ship
-RACKET_WIDTH = 106 #the width of the racket image - convert to ship
-RACKET_HEIGHT = 28 #the height of the racket image - convert to ship
-RACKET_RATE = 6 
-RACKET_VELOCITY = 7 #the speed the racket moves - conver to ship
+# SHIP - the constants for the ship class
+SHIP_GROUP = "ships" #the cast group for ships 
+SHIP_IMAGES = [f"batter/assets/images/{n:03}.png" for n in range(100, 103)] #the file path for the racket image - convert to ship
+SHIP_WIDTH = 106 #the width of the ship image 
+SHIP_HEIGHT = 28 #the height of the ship image 
+SHIP_RATE = 6 #the frame rate of ship animation
+SHIP_VELOCITY = 7 #the speed the ship moves 
 
-# BRICK - the constants for the bricks class - convert to aliens
-BRICK_GROUP = "bricks" #the cast group for bricks - convert to aliens
-BRICK_IMAGES = {
+# ALIEN - the constants for the aliens class 
+ALIEN_GROUP = "aliens" #the cast group for aliens 
+ALIEN_IMAGES = {
     "b": [f"batter/assets/images/{i:03}.png" for i in range(10,19)],
     "g": [f"batter/assets/images/{i:03}.png" for i in range(20,29)],
     "p": [f"batter/assets/images/{i:03}.png" for i in range(30,39)],
     "y": [f"batter/assets/images/{i:03}.png" for i in range(40,49)]
-} #the brick images - convert to alien
-BRICK_WIDTH = 80 #the width of a brick image - convert to alien
-BRICK_HEIGHT = 28 #the height of a brick image - convert to alien
-BRICK_DELAY = 0.5 
-BRICK_RATE = 4
-BRICK_POINTS = 50 #the number of points breaking a brick is worth - convert to aliens -- each alien image is worth different amounts of points
+} #the alien images
+ALIEN_WIDTH = 80 #the width of a alien image
+ALIEN_HEIGHT = 28 #the height of a alien image
+ALIEN_DELAY = 0.5 #the delay in animation of aliens
+ALIEN_RATE = 4 #the frame rate of alien animation
+ALIEN_POINTS = 50 #the number of points breaking a alien is worth - convert to aliens -- each alien image is worth different amounts of points
 
 # DIALOG - the messages printed on the the screen for the player to read and to give direction
 DIALOG_GROUP = "dialogs"
