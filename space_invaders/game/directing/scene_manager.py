@@ -171,7 +171,7 @@ class SceneManager:
         ball = cast.get_first_actor(BALL_GROUP)
         ball.release()
 
-    def _add_ball(self, cast):
+    def _add_ball(self, cast): # convert to add_ship_bullet and add_alien_bullet that each have their own cast group
         cast.clear_actors(BALL_GROUP)
         x = CENTER_X - BALL_WIDTH / 2
         y = SCREEN_HEIGHT - RACKET_HEIGHT - BALL_HEIGHT  

@@ -9,7 +9,7 @@ from game.casting.point import Point #import Point class to use for positioning 
 class Ship(Actor):
     """The ship representing the player protecting against the invaders."""
     
-    def __init__(self, body, animation, debug = False):
+    def __init__(self, body, image, debug = False):
         """Constructs a new Ship.
         
         Args:Args:
@@ -19,15 +19,24 @@ class Ship(Actor):
         """
         super().__init__(debug) #inherits the Actor init
         self._body = body #assings body arg to an attribute - the solid part of the ship for detecting collisions
-        self._animation = animation #assigns animation arg to an attribute - the animation of the ship
+        #self._animation = animation #assigns animation arg to an attribute - the animation of the ship -- not implemented
+        self._image = image
 
-    def get_animation(self):
-        """Gets the ship's animation.
+    #def get_animation(self):
+        """Gets the ship's animation. Not implemented in this version
         
         Returns:
             An instance of Animation.
         """
-        return self._animation
+        #return self._animation
+
+    def get_image(self):
+        """Gets the ship's image.
+        
+        Returns:
+            An instance of image.
+        """
+        return self._image
 
     def get_body(self):
         """Gets the ship's body.
