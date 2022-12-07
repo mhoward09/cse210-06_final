@@ -4,7 +4,7 @@ import pyray
 from constants import *
 from game.casting.color import Color
 from game.casting.text import Text
-from game.services.video_service import VideoService 
+from game.services.parent_services.video_service import VideoService 
 
 
 class RaylibVideoService(VideoService):

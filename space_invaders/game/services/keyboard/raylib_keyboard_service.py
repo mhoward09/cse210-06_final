@@ -1,5 +1,5 @@
 import pyray
-from game.services.keyboard_service import KeyboardService
+from game.services.parent_services.keyboard_service import KeyboardService
 
 
 class RaylibKeyboardService(KeyboardService):

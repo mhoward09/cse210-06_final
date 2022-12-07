@@ -1,5 +1,5 @@
 import pyray
-from game.services.physics_service import PhysicsService 
+from game.services.parent_services.physics_service import PhysicsService 
 
 
 class RaylibPhysicsService(PhysicsService):

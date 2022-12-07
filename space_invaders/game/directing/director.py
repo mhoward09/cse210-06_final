@@ -2,7 +2,7 @@
 from constants import * #imports all constants
 from space_invaders.game.casting.cast import Cast #imports Cast class
 from space_invaders.game.directing.scene_manager import SceneManager #impports SceneManager class
-from space_invaders.game.scripting.action_callback import ActionCallback #imports ActionCallback class
+from space_invaders.game.directing.action_callback import ActionCallback #imports ActionCallback class
 from space_invaders.game.scripting.script import Script #imports Script class
 
 #Director class
@@ -21,7 +21,7 @@ class Director(ActionCallback):
         self._scene_manager = SceneManager() #define the _scene_manager attribute as an instance of the SceneManager class to manage all the visuals in a given screen/level/scene
         
     def on_next(self, scene):
-        """Overriden ActionCallback method transitions to next scene.
+        """Overridden ActionCallback method transitions to next scene.
         
         Args:
             A number representing the next scene to transition to.
