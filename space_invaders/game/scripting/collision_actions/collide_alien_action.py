@@ -7,7 +7,7 @@ from game.scripting.action import Action #import action class as parent class
 
 
 class CollideAlienAction(Action):
-    '''checks for and resolves collisions between ship bullets or the ship and an alien
+    '''checks for and resolves collisions between ship bullets and an alien
         
         Arguments:
             physics service: an instance of physics_service
@@ -22,14 +22,13 @@ class CollideAlienAction(Action):
         aliens = cast.get_all_actors(ALIEN_GROUP)
         stats = cast.get_first_actor(STATS_GROUP)
         
-        for alien in bricks:
-            ball_body = ball.get_body()
-            alien_body = alien.get_body()
+        for alien in aliens:
+            for bullet in bullets:
+                bullet_body = bullet.get_body()
+                alien_body = alien.get_body()
 
-            if self._physics_service.has_collided(ball_body, alien_body):
-                ball.bounce_y()
-                sound = Sound(BOUNCE_SOUND)
-                self._audio_service.play_sound(sound)
-                points = alien.get_points()
-                stats.add_points(points)
-                cast.remove_actor(ALIEN_GROUP, alien)
+                if self._physics_service.has_collided(bullet_body, alien_body):
+                    cast.remove_actor(SHIP_BULLET_GROUP, bullet)
+                    points = alien.get_points()
+                    stats.add_points(points)
+                    cast.remove_actor(ALIEN_GROUP, alien)

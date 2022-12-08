@@ -37,7 +37,3 @@ class Bullet(Actor):
         """
         return self._image
         
-    def release(self):
-        """Release the bullet from the ship or alien."""
-        #needs to be implemented
-        pass

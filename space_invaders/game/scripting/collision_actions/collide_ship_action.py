@@ -22,10 +22,8 @@ class CollideShipAction(Action):
         """
         bullets = cast.get_all_actors(ALIEN_BULLET_GROUP) #gets the list of all bullets in the ALIEN_BULLET_GROUP from the cast class and assigns it a variable
         ship = cast.get_first_actor(SHIP_GROUP) #gets the instance of ship in play and assigns it a variable
-        
         bullet_body = bullet.get_body() #assigns a variable to the body of a bullet
         ship_body = ship.get_body() #assigns a variable to the body of the ship
-
         over_sound = Sound(OVER_SOUND) #assigns variable to game over sound
 
         for bullet in bullets:
