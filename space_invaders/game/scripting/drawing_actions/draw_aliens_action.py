@@ -1,6 +1,5 @@
 from constants import *
-from game.scripting.action import Action
-
+from space_invaders.game.scripting.action import Action
 
 class DrawAliensAction(Action):
 
@@ -8,7 +7,7 @@ class DrawAliensAction(Action):
         self._video_service = video_service
         
     def execute(self, cast, script, callback):
-        alien = cast.get_actors(ALIEN_GROUP)
+        aliens = cast.get_actors(ALIEN_GROUP)
         
         for alien in aliens:
             body = alien.get_body()
@@ -17,7 +16,6 @@ class DrawAliensAction(Action):
                 rectangle = body.get_rectangle()
                 self._video_service.draw_rectangle(rectangle, PURPLE)
                 
-            animation = alien.get_animation()
-            image = animation.next_image()
+            image = alien.get_image()
             position = body.get_position()
             self._video_service.draw_image(image, position)

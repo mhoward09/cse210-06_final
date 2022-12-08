@@ -1,4 +1,4 @@
-from game.casting.text import Text
+from space_invaders.game.casting.text import Text
 
 
 class Actor:

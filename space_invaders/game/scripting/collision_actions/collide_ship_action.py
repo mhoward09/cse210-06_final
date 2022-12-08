@@ -2,8 +2,8 @@
 from constants import *
 
 #import necessary classes
-from game.casting.sound import Sound #import sound class for collision sound
-from game.scripting.action import Action #import action class as parent class
+from space_invaders.game.casting.sound import Sound #import sound class for collision sound
+from space_invaders.game.scripting.action import Action #import action class as parent class
 
 
 class CollideShipAction(Action):
@@ -24,12 +24,13 @@ class CollideShipAction(Action):
         ship = cast.get_first_actor(SHIP_GROUP) #gets the instance of ship in play and assigns it a variable
         bullet_body = bullet.get_body() #assigns a variable to the body of a bullet
         ship_body = ship.get_body() #assigns a variable to the body of the ship
-        over_sound = Sound(OVER_SOUND) #assigns variable to game over sound
+        #over_sound = Sound(OVER_SOUND) #assigns variable to game over sound
 
         for bullet in bullets:
             #for all the bullets in the alien bullet group check for collision
             if self._physics_service.has_collided(bullet_body, ship_body):
                 #if the body of the ship has collided with the body of a bullet the player loses a life
+                cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
                 stats = cast.get_first_actor (STATS_GROUP) #assign the stats object a variable
                 stats.lose_life() #call the stats lose life method
                 #self._audio_service.play_sound(sound) - not implemented in this version   
@@ -39,4 +40,4 @@ class CollideShipAction(Action):
                 else:
                     #if that was the las life move to game over screen and play game over sound
                     callback.on_next(GAME_OVER)
-                    self._audio_service.play_sound(over_sound)
+                    #self._audio_service.play_sound(over_sound)

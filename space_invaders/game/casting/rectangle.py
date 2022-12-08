@@ -1,5 +1,5 @@
 #import necessary classes
-from game.casting.point import Point #import Point class for position and size uses
+from space_invaders.game.casting.point import Point #import Point class for position and size uses
 
 
 class Rectangle:

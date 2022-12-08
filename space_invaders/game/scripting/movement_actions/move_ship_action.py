@@ -1,6 +1,6 @@
 from constants import *
-from game.casting.point import Point
-from game.scripting.action import Action
+from space_invaders.game.casting.point import Point
+from space_invaders.game.scripting.action import Action
 
 
 class MoveShipAction(Action):

@@ -1,5 +1,5 @@
 from pathlib import Path
-from game.scripting.action import Action
+from space_invaders.game.scripting.action import Action
 
 
 class LoadAssetsAction(Action):

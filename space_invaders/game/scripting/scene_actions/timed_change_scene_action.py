@@ -1,5 +1,5 @@
 import time
-from game.scripting.action import Action
+from space_invaders.game.scripting.action import Action
 
 
 class TimedChangeSceneAction(Action):

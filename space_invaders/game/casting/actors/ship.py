@@ -2,8 +2,8 @@
 from constants import *
 
 #import necessary classes
-from game.casting.actors.actor import Actor #import Actor class to be parent class
-from game.casting.point import Point #import Point class to use for positioning and movement of ship
+from space_invaders.game.casting.actors.actor import Actor #import Actor class to be parent class
+from space_invaders.game.casting.point import Point #import Point class to use for positioning and movement of ship
 
 
 class Ship(Actor):

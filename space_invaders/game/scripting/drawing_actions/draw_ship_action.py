@@ -2,7 +2,7 @@
 from constants import *
 
 #import necessary classes
-from game.scripting.action import Action #import action class as parent class
+from space_invaders.game.scripting.action import Action #import action class as parent class
 
 
 class DrawShipAction(Action):

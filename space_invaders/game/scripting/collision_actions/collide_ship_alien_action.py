@@ -2,11 +2,11 @@
 from constants import *
 
 #import necessary classes
-from game.casting.sound import Sound #import sound class for collision sound
-from game.scripting.action import Action #import action class as parent class
+from space_invaders.game.casting.sound import Sound #import sound class for collision sound
+from space_invaders.game.scripting.action import Action #import action class as parent class
 
 
-class CollideShipAlien(Action):
+class CollideShipAlienAction(Action):
     '''checks for and resolves collisions between ship and an alien.
         
         Arguments:
@@ -21,7 +21,7 @@ class CollideShipAlien(Action):
         ship = cast.get_first_actor(SHIP_GROUP)
         aliens = cast.get_all_actors(ALIEN_GROUP)
         stats = cast.get_first_actor(STATS_GROUP)
-        over_sound = Sound(OVER_SOUND) #assigns variable to game over sound
+        #over_sound = Sound(OVER_SOUND) #assigns variable to game over sound
         
         for alien in aliens:
             alien_body = alien.get_body()
@@ -38,4 +38,4 @@ class CollideShipAlien(Action):
                 else:
                     #if that was the las life move to game over screen and play game over sound
                     callback.on_next(GAME_OVER)
-                    self._audio_service.play_sound(over_sound)
+                    #self._audio_service.play_sound(over_sound)

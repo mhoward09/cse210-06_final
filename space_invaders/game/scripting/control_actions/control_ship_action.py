@@ -1,10 +1,10 @@
 from constants import *
 
-from game.casting.point import Point
-from game.casting.body import Body
-from game.casting.image import Image
-from game.casting.actors.bullet import Bullet
-from game.scripting.action import Action
+from space_invaders.game.casting.point import Point
+from space_invaders.game.casting.body import Body
+from space_invaders.game.casting.image import Image
+from space_invaders.game.casting.actors.bullet import Bullet
+from space_invaders.game.scripting.action import Action
 
 
 class ControlShipAction(Action):
@@ -21,7 +21,7 @@ class ControlShipAction(Action):
             size = Point(BULLET_WIDTH, BULLET_HEIGHT)
             velocity = Point(0, 1)
             body = Body(position, size, velocity)
-            image = Image(BULLET_IMAGE)
+            image = Image(SHIP_BULLET_IMAGE)
             bullet = Bullet(body, image, True)
             cast.add_actor(SHIP_BULLET_GROUP, bullet)
 

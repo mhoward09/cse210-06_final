@@ -2,9 +2,9 @@ import os
 import pathlib
 import pyray
 from constants import *
-from game.casting.color import Color
-from game.casting.text import Text
-from game.services.parent_services.video_service import VideoService 
+from space_invaders.game.casting.color import Color
+from space_invaders.game.casting.text import Text
+from space_invaders.game.services.video.video_service import VideoService 
 
 
 class RaylibVideoService(VideoService):

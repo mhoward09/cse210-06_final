@@ -1,6 +1,6 @@
 from constants import *
-from game.scripting.action import Action
-from game.casting.sound import Sound
+from space_invaders.game.scripting.action import Action
+from space_invaders.game.casting.sound import Sound
 
 
 class PlaySoundAction(Action):

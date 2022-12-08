@@ -1,6 +1,6 @@
 #import necessary classes
-from game.casting.point import Point #import Point class for positioning uses
-from game.casting.rectangle import Rectangle #import Rectangle to define body edges
+from space_invaders.game.casting.point import Point #import Point class for positioning uses
+from space_invaders.game.casting.rectangle import Rectangle #import Rectangle to define body edges
 
 
 class Body:

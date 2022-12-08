@@ -1,7 +1,7 @@
 import os
 import pathlib
 import pyray
-from game.services.audio.audio_service import AudioService 
+from space_invaders.game.services.audio.audio_service import AudioService 
 
 
 class RaylibAudioService(AudioService):

@@ -1,5 +1,5 @@
 #import necessary classes
-from game.casting.actors.actor import Actor #import Actor class to be the parent class
+from space_invaders.game.casting.actors.actor import Actor #import Actor class to be the parent class
 
 class Label(Actor):
     """A label to be displayed."""

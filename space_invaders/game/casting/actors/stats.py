@@ -2,7 +2,7 @@
 from constants import *
 
 #import necessary classes
-from game.casting.actors.actor import Actor #import Actor class to act as parent class
+from space_invaders.game.casting.actors.actor import Actor #import Actor class to act as parent class
 
 
 class Stats(Actor):

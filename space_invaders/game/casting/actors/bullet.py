@@ -2,8 +2,8 @@
 from constants import *
 
 #import necessary classes
-from game.casting.actors.actor import Actor #imports Actor class for use as parent class
-from game.casting.point import Point #imports Point class for use in positioning and movement of the bullets
+from space_invaders.game.casting.actors.actor import Actor #imports Actor class for use as parent class
+from space_invaders.game.casting.point import Point #imports Point class for use in positioning and movement of the bullets
 
 
 class Bullet(Actor):
