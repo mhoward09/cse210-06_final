@@ -8,18 +8,22 @@ class DrawBulletAction(Action):
         self._video_service = video_service
         
     def execute(self, cast, script, callback):
-        ship_bullets = cast.get_all_actors(SHIP_BULLET_GROUP)
-        alien_bullets = cast.get_all_actors(ALIEN_BULLET_GROUP)
+        ship_bullets = cast.get_actors(SHIP_BULLET_GROUP)
+        alien_bullets = cast.get_actors(ALIEN_BULLET_GROUP)
+        
+        all_bullets = [ship_bullets.extend(alien_bullets)]
+        
+        if len(ship_bullets) != 0 or len(alien_bullets) != 0:
+            all_bullets = ship_bullets.extend(alien_bullets)
+            for bullet in all_bullets:
+                body = bullet.get_body()
 
-        all_bullets = ship_bullets.extend(alien_bullets)
-
-        for bullet in all_bullets:
-            body = bullet.get_body()
-
-            if bullet.is_debug():
-                rectangle = body.get_rectangle()
-                self._video_service.draw_rectangle(rectangle, PURPLE)
-            
-            image = bullet.get_image()
-            position = body.get_position()
-            self._video_service.draw_image(image, position)
+                if bullet.is_debug():
+                    rectangle = body.get_rectangle()
+                    self._video_service.draw_rectangle(rectangle, PURPLE)
+                
+                image = bullet.get_image()
+                position = body.get_position()
+                self._video_service.draw_image(image, position)
+        else:
+            pass

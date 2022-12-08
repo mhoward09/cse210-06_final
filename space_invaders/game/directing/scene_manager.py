@@ -177,26 +177,30 @@ class SceneManager:
 
             for r, row in enumerate(reader):
                 for c, column in enumerate(row):
-
+                
                     x = FIELD_LEFT + c * ALIEN_WIDTH
                     y = FIELD_TOP + r * ALIEN_HEIGHT
-                    alien = column[0]
+                    alien_type = column[0]
                     frames = int(column[1])
+                    hitPoints = ALIEN_HITPOINTS
                     points = ALIEN_POINTS 
                     
                     if frames == 2:
+                        hitPoints *= 2
                         points *= 2
                     elif frames == 5:
+                        hitPoints *= 5
                         points *= 5
                     
                     position = Point(x, y)
                     size = Point(ALIEN_WIDTH, ALIEN_HEIGHT)
                     velocity = Point(0, 0)
-                    image = ALIEN_IMAGES[alien][0:frames]
-
+                    image_file = ALIEN_IMAGES[alien_type]
+                    print(image_file)
                     body = Body(position, size, velocity)
+                    image = Image(image_file, .5)
 
-                    alien = Alien(body, image, points)
+                    alien = Alien(body, image, hitPoints, points)
                     cast.add_actor(ALIEN_GROUP, alien)
 
     def _add_dialog(self, cast, message):
@@ -240,8 +244,8 @@ class SceneManager:
         size = Point(SHIP_WIDTH, SHIP_HEIGHT)
         velocity = Point(0, 0)
         body = Body(position, size, velocity)
-        animation = Animation(SHIP_IMAGES, SHIP_RATE)
-        ship = Ship(body, animation)
+        image = Image(SHIP_IMAGES)
+        ship = Ship(body, image)
         cast.add_actor(SHIP_GROUP, ship)
 
     # ----------------------------------------------------------------------------------------------
