@@ -19,6 +19,7 @@ class Director(ActionCallback):
         self._cast = Cast() #defines the _cast attribute as an instance of the Cast class to manage all actors/game objects
         self._script = Script() #defines the _script attribute as an instance of the Script class to manage all the movements of the actors/game objects
         self._scene_manager = SceneManager() #define the _scene_manager attribute as an instance of the SceneManager class to manage all the visuals in a given screen/level/scene
+        self._counter = 0
         
     def on_next(self, scene):
         """Overridden ActionCallback method transitions to next scene.
@@ -34,6 +35,11 @@ class Director(ActionCallback):
         self._execute_actions(INITIALIZE) #calls the _execute_actions method from below given the parameter Initialize to call the group of script actions to initialize or begin the raylib audio and video services of the game -- it opens the window and prepares the sounds of the game played through the raylib library
         self._execute_actions(LOAD)
         while self._video_service.is_window_open():
+
+            #I need a counter to time alien movements/actions
+            if self._counter % 480 == 0:
+                self._counter = 0
+            self._counter += 1
             self._execute_actions(INPUT)
             self._execute_actions(UPDATE)
             self._execute_actions(OUTPUT)
