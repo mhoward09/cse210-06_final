@@ -19,14 +19,16 @@ class CollideBulletBordersAction(Action):
         self._audio_service = audio_service    
         
     def execute(self, cast, script, callback):
-        ship_bullets = cast.get_all_actors(SHIP_BULLET_GROUP)
-        alien_bullets = cast.get_all_actors(ALIEN_BULLET_GROUP)
+        ship_bullets = cast.get_actors(SHIP_BULLET_GROUP)
+        alien_bullets = cast.get_actors(ALIEN_BULLET_GROUP)
 
-        for bullet in ship_bullets:
-            body = bullet.get_body()
-            position = body.get_position()
-            x = position.get_x()
-            y = position.get_y()
+        if len(ship_bullets) != 0 or len(alien_bullets) != 0:
+            
+            for bullet in ship_bullets:
+                body = bullet.get_body()
+                position = body.get_position()
+                x = position.get_x()
+                y = position.get_y()
                     
             #if x < FIELD_LEFT:
                 #cast.remove_actor(SHIP_BULLET_GROUP, bullet)
@@ -37,11 +39,8 @@ class CollideBulletBordersAction(Action):
             if y > FIELD_TOP:
                 cast.remove_actor(SHIP_BULLET_GROUP, bullet)
 
-        for bullet in alien_bullets:
-            body = bullet.get_body()
-            position = body.get_position()
-            x = position.get_x()
-            y = position.get_y()
+            else:
+                pass
                     
             #if x < FIELD_LEFT:
                 #cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
@@ -49,5 +48,14 @@ class CollideBulletBordersAction(Action):
             #elif x >= (FIELD_RIGHT - BULLET_WIDTH):
                 #cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
 
-            if y <= (FIELD_BOTTOM + BULLET_HEIGHT):
-                cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
+            for bullet in alien_bullets:
+                body = bullet.get_body()
+                position = body.get_position()
+                x = position.get_x()
+                y = position.get_y()
+
+                if y <= (FIELD_BOTTOM):
+                    cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
+
+                else:
+                    pass

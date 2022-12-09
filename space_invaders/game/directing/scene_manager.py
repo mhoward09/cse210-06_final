@@ -132,7 +132,7 @@ class SceneManager:
         script.clear_actions(INPUT)
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
         self._add_output_script(script)
-        script.add_action(OUTPUT) #PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND)
+        script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
         
     def _prepare_try_again(self, cast, script):
         self._add_aliens(cast)
@@ -196,7 +196,6 @@ class SceneManager:
                     size = Point(ALIEN_WIDTH, ALIEN_HEIGHT)
                     velocity = Point(0, 0)
                     image_file = ALIEN_IMAGES[alien_type]
-                    print(image_file)
                     body = Body(position, size, velocity)
                     image = Image(image_file, .5)
 
@@ -281,10 +280,10 @@ class SceneManager:
         script.clear_actions(UPDATE)
         script.add_action(UPDATE, self.MOVE_BULLET_ACTION)
         script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
-        script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
-        script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
-        script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
-        script.add_action(UPDATE, self.COLLIDE_SHIP_ALIEN_ACTION)
+        #script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
+        #script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
+        #script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
+        #script.add_action(UPDATE, self.COLLIDE_SHIP_ALIEN_ACTION)
         script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
         script.add_action(UPDATE, self.CHECK_OVER_ACTION)
         

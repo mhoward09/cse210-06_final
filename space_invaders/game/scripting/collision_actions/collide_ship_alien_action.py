@@ -19,7 +19,7 @@ class CollideShipAlienAction(Action):
         
     def execute(self, cast, script, callback):
         ship = cast.get_first_actor(SHIP_GROUP)
-        aliens = cast.get_all_actors(ALIEN_GROUP)
+        aliens = cast.get_actors(ALIEN_GROUP)
         stats = cast.get_first_actor(STATS_GROUP)
         #over_sound = Sound(OVER_SOUND) #assigns variable to game over sound
         

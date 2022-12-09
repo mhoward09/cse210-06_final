@@ -9,7 +9,7 @@ from space_invaders.game.casting.point import Point #imports Point class for use
 class Bullet(Actor):
     """A solid projectile shot from the ship or an alien."""
     
-    def __init__(self, body, image, debug = False):
+    def __init__(self, body, image, debug = True):
         """Constructs a new Bullet.
 
         Args:

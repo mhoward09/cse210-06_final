@@ -33,6 +33,7 @@ class FireBulletAction(Action):
             image = Image(SHIP_BULLET_IMAGE)
             bullet = Bullet(body, image, True)
             cast.add_actor(SHIP_BULLET_GROUP, bullet)
+            print("bullet fired")
         else:
             origin_body = self._origin.get_body()
             position = origin_body.get_position()

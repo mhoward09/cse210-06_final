@@ -20,24 +20,25 @@ class CollideShipAction(Action):
     def execute(self, cast, script, callback):
         """Overwriting parent execute action. To check for collision with bullet from alien and resolve the collision.
         """
-        bullets = cast.get_all_actors(ALIEN_BULLET_GROUP) #gets the list of all bullets in the ALIEN_BULLET_GROUP from the cast class and assigns it a variable
+        bullets = cast.get_actors(ALIEN_BULLET_GROUP) #gets the list of all bullets in the ALIEN_BULLET_GROUP from the cast class and assigns it a variable
         ship = cast.get_first_actor(SHIP_GROUP) #gets the instance of ship in play and assigns it a variable
-        bullet_body = bullet.get_body() #assigns a variable to the body of a bullet
         ship_body = ship.get_body() #assigns a variable to the body of the ship
         #over_sound = Sound(OVER_SOUND) #assigns variable to game over sound
 
-        for bullet in bullets:
-            #for all the bullets in the alien bullet group check for collision
-            if self._physics_service.has_collided(bullet_body, ship_body):
-                #if the body of the ship has collided with the body of a bullet the player loses a life
-                cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
-                stats = cast.get_first_actor (STATS_GROUP) #assign the stats object a variable
-                stats.lose_life() #call the stats lose life method
-                #self._audio_service.play_sound(sound) - not implemented in this version   
-                if stats.get_lives() > 0:
-                    #if there is still a life available move to try_again scene
-                    callback.on_next(TRY_AGAIN)
-                else:
-                    #if that was the las life move to game over screen and play game over sound
-                    callback.on_next(GAME_OVER)
-                    #self._audio_service.play_sound(over_sound)
+        if len(bullets) != 0:
+            for bullet in bullets:
+                bullet_body = bullet.get_body() #assigns a variable to the body of a bullet
+                #for all the bullets in the alien bullet group check for collision
+                if self._physics_service.has_collided(bullet_body, ship_body):
+                    #if the body of the ship has collided with the body of a bullet the player loses a life
+                    cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
+                    stats = cast.get_first_actor (STATS_GROUP) #assign the stats object a variable
+                    stats.lose_life() #call the stats lose life method
+                    #self._audio_service.play_sound(sound) - not implemented in this version   
+                    if stats.get_lives() > 0:
+                        #if there is still a life available move to try_again scene
+                        callback.on_next(TRY_AGAIN)
+                    else:
+                        #if that was the las life move to game over screen and play game over sound
+                        callback.on_next(GAME_OVER)
+                        #self._audio_service.play_sound(over_sound)
