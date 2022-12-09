@@ -1,5 +1,7 @@
 #import necessary classes
+from constants import *
 from space_invaders.game.casting.actors.actor import Actor #import Actor class for use as parent class
+from game.casting.point import Point
 
 
 class Alien(Actor):
@@ -50,3 +52,38 @@ class Alien(Actor):
             A number representing the brick's points.
         """
         return self._points
+
+    #moves the aliens from left to right
+    def move_opposite(self):
+        """Moves the aliens left to right"""
+        velocity = self._body.get_velocity()
+        vx = velocity.get_x() * -1
+        vy = velocity.get_y()
+        velocity = Point(vx, vy)
+        self._body.set_velocity(velocity)
+
+    def move_down(self):
+        """Moves the alien down."""
+        velocity = self._body.get_velocity()
+        vx = velocity.get_x()
+        vy = ALIEN_VELOCITY_Y
+        velocity = Point(vx, vy)
+        self._body.set_velocity(velocity)
+
+    #stops the alien from moving down
+    def stop_y(self):
+        """Returns the y velocity to zero."""
+        velocity = self._body.get_velocity()
+        #rn = random.uniform(0.9, 1.1)
+        vx = velocity.get_x()
+        vy = 0 
+        velocity = Point(vx, vy)
+        self._body.set_velocity(velocity)
+
+    #moves the alien group to the right at the start
+    def release(self):
+        """Release the ball in a random direction."""
+        vx = ALIEN_VELOCITY_X
+        vy = 0
+        velocity = Point(vx, vy)
+        self._body.set_velocity(velocity)

@@ -19,6 +19,11 @@ from space_invaders.game.scripting.collision_actions.collide_alien_action import
 from space_invaders.game.scripting.collision_actions.collide_ship_alien_action import CollideShipAlienAction
 from space_invaders.game.scripting.collision_actions.collide_ship_action import CollideShipAction #imports the CollideRacketAction which handles the ball hitting the racket and bouncing - this will be adjusted to a bullet hitting the ship and triggering a loss
 from space_invaders.game.scripting.control_actions.control_ship_action import ControlShipAction #this imports the ControlRacketAction class which manages the key input to control the racket for play - this will need to be converted to the control ship action which will move the ship left and right and fire bullets
+
+#FROM GREG
+from space_invaders.game.scripting.control_actions.alien_fire_action import AlienBulletAction #controls the firing of alien bullets not sure if
+#this belongs in the control_actions folder or movement_actions folder
+
 from space_invaders.game.scripting.drawing_actions.draw_bullet_action import DrawBulletAction #imports the DrawBallAction class that include the code to display the ball on the screen - will need to be converted to bullet
 from space_invaders.game.scripting.drawing_actions.draw_aliens_action import DrawAliensAction #imports the DrawBricksAction class that is the code to display the bricks - will need to be converted to aliens
 from space_invaders.game.scripting.drawing_actions.draw_dialog_action import DrawDialogAction #imports the DrawDialog action class which is responsible for displaying the messages in the middle of the screen (count down to level start)
@@ -28,6 +33,11 @@ from space_invaders.game.scripting.drawing_actions.end_drawing_action import End
 from space_invaders.game.scripting.game_start_actions.initialize_devices_action import InitializeDevicesAction #imports the InitializeDevicesAction responsible for starting the video and sound services for game play
 from space_invaders.game.scripting.game_start_actions.load_assets_action import LoadAssetsAction #imports the LoadAssetsAction responsible for loading the level data, images and sounds for game play
 from space_invaders.game.scripting.movement_actions.move_bullet_action import MoveBulletAction #imports MoveBallAction responsible for the movement of the ball from frame to frame - to be converted to bullet
+
+#FROM GREG
+from space_invaders.game.scripting.movement_actions.move_alien_action import MoveAlienAction #imports MoveBallAction responsible for the movement of the ball from frame to frame - to be converted to aliens
+
+
 from space_invaders.game.scripting.movement_actions.move_ship_action import MoveShipAction #imports MoveRacketAction responsible for movement of racket from frame to frame - to be converted to ship
 from space_invaders.game.scripting.sound_actions.play_sound_action import PlaySoundAction #imports PlaySoundAction responsible for playing a given sound when called
 from space_invaders.game.scripting.game_end_actions.release_devices_action import ReleaseDevicesAction #imports ReleaseDevicesAcion responsible for ending the video and sound services when game is closed
@@ -81,6 +91,10 @@ class SceneManager:
     #movement references
     MOVE_BULLET_ACTION = MoveBulletAction()
     MOVE_SHIP_ACTION = MoveShipAction()
+
+    #FROM GREG
+    MOVE_ALIEN_ACTION = MoveAlienAction()
+    ALIEN_BULLET_ACTION = AlienBulletAction()
 
     #game closing refernces
     RELEASE_DEVICES_ACTION = ReleaseDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
@@ -164,6 +178,13 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     # casting methods
     # ----------------------------------------------------------------------------------------------
+
+    #from GREG 
+    #Starts the alien moving
+    def _activate_bricks(self, cast):
+        aliens = cast.get_actors(ALIEN_GROUP)
+        for alien in aliens:
+            alien.release()
 
     def _add_aliens(self, cast):
         cast.clear_actors(ALIEN_GROUP)
@@ -280,6 +301,10 @@ class SceneManager:
         script.clear_actions(UPDATE)
         script.add_action(UPDATE, self.MOVE_BULLET_ACTION)
         script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
+
+        #FROM GREG adding the alien bullet action to the script
+        script.add_action(UPDATE, self.ALIEN_BULLET_ACTION)
+        
         #script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)

@@ -9,6 +9,8 @@ from space_invaders.game.casting.actors.ship import Ship
 from space_invaders.game.casting.actors.alien import Alien
 from space_invaders.game.casting.sound import Sound
 
+#from Greg maybe we can rename this ShipBulletAction
+#I will create AlienBulletAction to handle alien firings
 class FireBulletAction(Action):
     """creates a bullet from an origin (ship or alien) object.
     
@@ -34,6 +36,9 @@ class FireBulletAction(Action):
             bullet = Bullet(body, image, True)
             cast.add_actor(SHIP_BULLET_GROUP, bullet)
             print("bullet fired")
+
+        #perhaps we will no longer need this part since 
+        #alien bullet firing will be handled by another class
         else:
             origin_body = self._origin.get_body()
             position = origin_body.get_position()
