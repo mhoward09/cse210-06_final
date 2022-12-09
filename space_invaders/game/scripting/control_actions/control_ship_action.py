@@ -21,11 +21,11 @@ class ControlShipAction(Action):
             ship_position = ship_body.get_position()
             x = ship_position.get_x()
             y = ship_position.get_y()
-            position = Point(x + SHIP_WIDTH/2, y + SHIP_HEIGHT/2)
+            position = Point(x + SHIP_WIDTH/2.45, y + SHIP_HEIGHT/11)
             size = Point(BULLET_WIDTH, BULLET_HEIGHT)
             velocity = Point(0, -1)
             body = Body(position, size, velocity)
-            image = Image(SHIP_BULLET_IMAGE)
+            image = Image(SHIP_BULLET_IMAGE, .5)
             bullet = Bullet(body, image)
             cast.add_actor(SHIP_BULLET_GROUP, bullet)
 

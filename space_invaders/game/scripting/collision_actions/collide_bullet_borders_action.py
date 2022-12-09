@@ -39,21 +39,15 @@ class CollideBulletBordersAction(Action):
 
             else:
                 pass
-                    
-            #if x < FIELD_LEFT:
-                #cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
 
-            #elif x >= (FIELD_RIGHT - BULLET_WIDTH):
-                #cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
+            #for bullet in alien_bullets:
+                #body = bullet.get_body()
+                #position = body.get_position()
+                #x = position.get_x()
+                #y = position.get_y()
 
-            for bullet in alien_bullets:
-                body = bullet.get_body()
-                position = body.get_position()
-                x = position.get_x()
-                y = position.get_y()
+                #if y >= (FIELD_BOTTOM):
+                    #cast.remove_actor#(ALIEN_BULLET_GROUP, bullet)
 
-                if y <= (FIELD_BOTTOM):
-                    cast.remove_actor(ALIEN_BULLET_GROUP, bullet)
-
-                else:
-                    pass
+                #else:
+                    #pass

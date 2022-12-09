@@ -15,8 +15,10 @@ from space_invaders.game.casting.text import Text #imports the Text class - mana
 from space_invaders.game.scripting.scene_actions.change_scene_action import ChangeSceneAction #imports the ChangeSceneAction class - changes the screen when ENTER is pressed
 from space_invaders.game.scripting.scene_actions.check_over_action import CheckOverAction #imports the CheckOverAction - checks the cast list of aliens, if it is empty it signals to move to the next level
 from space_invaders.game.scripting.collision_actions.collide_bullet_borders_action import CollideBulletBordersAction #imports the CollideBordersAction which detects if the ball touches an edge of the screen and if it does what happens (a bounce or a loss) - we won't have bouncing but we will need to detect collision with the bottom to detect a loss and the starting point for the aliens will need to be under the HUD area
+from space_invaders.game.scripting.collision_actions.collide_alien_border_action import CollideAlienBorderAction
 from space_invaders.game.scripting.collision_actions.collide_alien_action import CollideAlienAction #imports the CollideBrickAction class which detects if the ball hits a brick causing the ball to bounce the brick to be removed and the points to be added to the score - we will not need the bounce but score will need to be added and alien/brick removed upon the collision of a bullet with an alien
 from space_invaders.game.scripting.collision_actions.collide_ship_alien_action import CollideShipAlienAction
+from space_invaders.game.scripting.collision_actions.collide_alien_alien_action import CollideAlienAlienAction
 from space_invaders.game.scripting.collision_actions.collide_ship_action import CollideShipAction #imports the CollideRacketAction which handles the ball hitting the racket and bouncing - this will be adjusted to a bullet hitting the ship and triggering a loss
 from space_invaders.game.scripting.control_actions.control_ship_action import ControlShipAction #this imports the ControlRacketAction class which manages the key input to control the racket for play - this will need to be converted to the control ship action which will move the ship left and right and fire bullets
 
@@ -36,7 +38,6 @@ from space_invaders.game.scripting.movement_actions.move_bullet_action import Mo
 
 #FROM GREG
 from space_invaders.game.scripting.movement_actions.move_alien_action import MoveAlienAction #imports MoveBallAction responsible for the movement of the ball from frame to frame - to be converted to aliens
-
 
 from space_invaders.game.scripting.movement_actions.move_ship_action import MoveShipAction #imports MoveRacketAction responsible for movement of racket from frame to frame - to be converted to ship
 from space_invaders.game.scripting.sound_actions.play_sound_action import PlaySoundAction #imports PlaySoundAction responsible for playing a given sound when called
@@ -68,10 +69,11 @@ class SceneManager:
 
     #collision references
     COLLIDE_BULLET_BORDERS_ACTION = CollideBulletBordersAction(PHYSICS_SERVICE, AUDIO_SERVICE)
+    COLLIDE_ALIEN_BORDER_ACTION = CollideAlienBorderAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_ALIEN_ACTION = CollideAlienAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_SHIP_ACTION = CollideShipAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_SHIP_ALIEN_ACTION = CollideShipAlienAction(PHYSICS_SERVICE, AUDIO_SERVICE)
-
+    COLLIDE_ALIEN_ALIEN_ACTION = CollideAlienAlienAction(PHYSICS_SERVICE)
     #game control references
     CONTROL_SHIP_ACTION = ControlShipAction(KEYBOARD_SERVICE)
 
@@ -128,7 +130,7 @@ class SceneManager:
         self._add_score(cast)
         self._add_aliens(cast)
         self._add_ship(cast)
-        self._add_dialog(cast, SPACE_TO_START)
+        self._add_dialog(cast, ENTER_TO_START)
 
         self._add_initialize_script(script)
         self._add_load_script(script)
@@ -199,7 +201,7 @@ class SceneManager:
             for r, row in enumerate(reader):
                 for c, column in enumerate(row):
                 
-                    x = FIELD_LEFT + c * ALIEN_WIDTH
+                    x = (FIELD_LEFT + 1) + c * ALIEN_WIDTH
                     y = FIELD_TOP + r * ALIEN_HEIGHT
                     alien_type = column[0]
                     frames = int(column[1])
@@ -215,7 +217,7 @@ class SceneManager:
                     
                     position = Point(x, y)
                     size = Point(ALIEN_WIDTH, ALIEN_HEIGHT)
-                    velocity = Point(0, 0)
+                    velocity = Point(ALIEN_VELOCITY_X, 0)
                     image_file = ALIEN_IMAGES[alien_type]
                     body = Body(position, size, velocity)
                     image = Image(image_file, .5)
@@ -301,14 +303,13 @@ class SceneManager:
         script.clear_actions(UPDATE)
         script.add_action(UPDATE, self.MOVE_BULLET_ACTION)
         script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
-
-        #FROM GREG adding the alien bullet action to the script
-        script.add_action(UPDATE, self.ALIEN_BULLET_ACTION)
-        
+        script.add_action(UPDATE, self.ALIEN_BULLET_ACTION)#FROM GREG adding the alien bullet action to the script
         script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_ALIEN_BORDER_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_ALIEN_ALIEN_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_SHIP_ALIEN_ACTION)
-        script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
+        script.add_action(UPDATE, self.MOVE_ALIEN_ACTION)
         script.add_action(UPDATE, self.CHECK_OVER_ACTION)
         

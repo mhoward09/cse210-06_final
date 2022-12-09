@@ -21,9 +21,8 @@ class AlienBulletAction(Action):
         sound: an instance of a sound
     """
 
-    def __init__(self, origin):
-        super().__init__()
-        self._origin = origin 
+    def __init__(self):
+        super().__init__() 
         #self._sound = sound
 
     def execute(self, cast, script, callback):
@@ -39,7 +38,7 @@ class AlienBulletAction(Action):
             size = Point(BULLET_WIDTH, BULLET_HEIGHT)
             velocity = Point(0, 6) #I figured 6 should be fast enough for bullet travel
             abody = Body(position, size, velocity)
-            image = Image(BULLET_IMAGE)
+            image = Image(ALIEN_BULLET_IMAGE)
             bullet = Bullet(abody, image, True)
             cast.add_actor(ALIEN_BULLET_GROUP, bullet)
 

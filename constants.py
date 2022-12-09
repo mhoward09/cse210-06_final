@@ -1,4 +1,4 @@
-# constants regarding game play
+'''constants regarding game play'''
 #import some sort of file path converting library
 from space_invaders.game.casting.color import Color #import the Color class from the color file which creates a color object to be used when drawing/displaying the game objects in the video service
 
@@ -23,14 +23,14 @@ FIELD_LEFT = 0 #the left side of the play screen
 FIELD_RIGHT = SCREEN_WIDTH #the right side of the play screen
 
 # FONT - the font used for the game
-FONT_FILE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/fonts/zorque.otf" #file that contains the font for the printed items on the screen
+FONT_FILE = "space_invaders/assets/fonts/SpaceMission-rgyw9.otf" #file that contains the font for the printed items on the screen
 FONT_SMALL = 32 #size of small font
 FONT_LARGE = 48 #size of large font
 
 # SOUND - game play sounds
-BOUNCE_SOUND = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/sounds/boing.wav" #sound of a bouncing ball - to be replaced with sound of bullet being fired
-WELCOME_SOUND =os.path.dirname(os.path.abspath(__file__)) +  "batter/assets/sounds/start.wav" #sound of the opening screen - replace with sound of choice
-OVER_SOUND = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/sounds/over.wav" #sound of game over - replace with sound of choice
+BULLET_SOUND = "space_invaders/assets/sounds/pewpew.wav" #sound of a bouncing ball - to be replaced with sound of bullet being fired
+WELCOME_SOUND = "space_invaders/assets/sounds/start.wav" #sound of the opening screen - replace with sound of choice
+OVER_SOUND = "space_invaders/assets/sounds/over.wav" #sound of game over - replace with sound of choice
 #ALIEN_SOUND - will be the sound made when the aliens are destroyed
 
 # TEXT 
@@ -58,8 +58,8 @@ IN_PLAY = 3
 GAME_OVER = 4 #the screen for when the game ends
 
 # LEVELS - the file directory to the level data
-LEVEL_FILE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/data/level-{:03}.txt" #the file directory for the level foundation text
-BASE_LEVELS = 5 
+LEVEL_FILE = "space_invaders/assets/level_data/level-001.txt" #the file directory for the level foundation text
+BASE_LEVELS = 3 
 
 # -------------------------------------------------------------------------------------------------- 
 # SCRIPTING CONSTANTS
@@ -93,38 +93,43 @@ LIVES_FORMAT = "LIVES: {}" #the displaying of the number of live the player has
 SCORE_FORMAT = "SCORE: {}" #the displaying of the player's score
 
 # BULLET - The constants for the bullet class 
-BULLET_GROUP = "bullets" #the cast group for the bullet 
-BULLET_IMAGE = os.path.dirname(os.path.abspath(__file__)) + "batter/assets/images/000.png" #file for bullet image 
+SHIP_BULLET_GROUP = "bullets"
+ALIEN_BULLET_GROUP = "alien_bullets" #the cast group for the bullet 
+SHIP_BULLET_IMAGE = "space_invaders/assets/images/ship_bullet.png" #file for bullet image 
+ALIEN_BULLET_IMAGE = "space_invaders/assets/images/alien_bullet.png" #file for bullet image 
 BULLET_WIDTH = 28 #width of bullet image
 BULLET_HEIGHT = 28 #height of bullet image
-BULLET_VELOCITY = 6 #speed of the bullet in frames -- bullets only move up or down based on who fired them (positive or negative y dimension) 
+BULLET_VELOCITY = 1 #speed of the bullet in frames -- bullets only move up or down based on who fired them (positive or negative y dimension) 
 
 # SHIP - the constants for the ship class
 SHIP_GROUP = "ships" #the cast group for ships 
-SHIP_IMAGES = [f"batter/assets/images/{n:03}.png" for n in range(100, 103)] #the file path for the racket image - convert to ship
+SHIP_IMAGES = "space_invaders/assets/images/Human-Fighter.png" #the file path for the racket image - convert to ship
 SHIP_WIDTH = 106 #the width of the ship image 
-SHIP_HEIGHT = 28 #the height of the ship image 
+SHIP_HEIGHT = 100 #the height of the ship image 
 SHIP_RATE = 6 #the frame rate of ship animation
 SHIP_VELOCITY = 7 #the speed the ship moves 
 
 # ALIEN - the constants for the aliens class 
 ALIEN_GROUP = "aliens" #the cast group for aliens 
 ALIEN_IMAGES = {
-    "b": [f"batter/assets/images/{i:03}.png" for i in range(10,19)],
-    "g": [f"batter/assets/images/{i:03}.png" for i in range(20,29)],
-    "p": [f"batter/assets/images/{i:03}.png" for i in range(30,39)],
-    "y": [f"batter/assets/images/{i:03}.png" for i in range(40,49)]
+    "a": "space_invaders/assets/images/alien1.png",
+    "b": "space_invaders/assets/images/alien2.png",
+    "m": "space_invaders/assets/images/alien5.png"
 } #the alien images
-ALIEN_WIDTH = 80 #the width of a alien image
-ALIEN_HEIGHT = 28 #the height of a alien image
+ALIEN_WIDTH = 70 #the width of a alien image
+ALIEN_HEIGHT = 32 #the height of a alien image
 ALIEN_DELAY = 0.5 #the delay in animation of aliens
 ALIEN_RATE = 4 #the frame rate of alien animation
 ALIEN_POINTS = 50 #the number of points breaking a alien is worth - convert to aliens -- each alien image is worth different amounts of points
+<<<<<<< Updated upstream
 ALIEN_VELOCITY_Y = 12
 ALIEN_VELOCITY_X = 6
+=======
+ALIEN_HITPOINTS = 1
+>>>>>>> Stashed changes
 
 # DIALOG - the messages printed on the the screen for the player to read and to give direction
 DIALOG_GROUP = "dialogs"
-ENTER_TO_START = "PRESS ENTER TO START"
+SPACE_TO_START = "PRESS ENTER TO START"
 PREP_TO_LAUNCH = "PREPARING TO LAUNCH"
 WAS_GOOD_GAME = "GAME OVER"
