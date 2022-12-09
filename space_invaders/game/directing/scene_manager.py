@@ -280,7 +280,7 @@ class SceneManager:
         script.clear_actions(UPDATE)
         script.add_action(UPDATE, self.MOVE_BULLET_ACTION)
         script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
-        #script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_SHIP_ALIEN_ACTION)
