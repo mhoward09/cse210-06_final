@@ -120,6 +120,8 @@ ALIEN_HEIGHT = 28 #the height of a alien image
 ALIEN_DELAY = 0.5 #the delay in animation of aliens
 ALIEN_RATE = 4 #the frame rate of alien animation
 ALIEN_POINTS = 50 #the number of points breaking a alien is worth - convert to aliens -- each alien image is worth different amounts of points
+ALIEN_VELOCITY_Y = 12
+ALIEN_VELOCITY_X = 6
 
 # DIALOG - the messages printed on the the screen for the player to read and to give direction
 DIALOG_GROUP = "dialogs"
