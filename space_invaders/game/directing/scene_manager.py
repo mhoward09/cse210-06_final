@@ -17,6 +17,7 @@ from space_invaders.game.scripting.scene_actions.check_over_action import CheckO
 from space_invaders.game.scripting.collision_actions.collide_bullet_borders_action import CollideBulletBordersAction #imports the CollideBordersAction which detects if the ball touches an edge of the screen and if it does what happens (a bounce or a loss) - we won't have bouncing but we will need to detect collision with the bottom to detect a loss and the starting point for the aliens will need to be under the HUD area
 from space_invaders.game.scripting.collision_actions.collide_alien_border_action import CollideAlienBorderAction
 from space_invaders.game.scripting.collision_actions.collide_alien_action import CollideAlienAction #imports the CollideBrickAction class which detects if the ball hits a brick causing the ball to bounce the brick to be removed and the points to be added to the score - we will not need the bounce but score will need to be added and alien/brick removed upon the collision of a bullet with an alien
+from space_invaders.game.scripting.collision_actions.collide_sbullet_sbullet_action import CollideSbulletSbulletAction
 from space_invaders.game.scripting.collision_actions.collide_ship_alien_action import CollideShipAlienAction
 from space_invaders.game.scripting.collision_actions.collide_ship_action import CollideShipAction #imports the CollideRacketAction which handles the ball hitting the racket and bouncing - this will be adjusted to a bullet hitting the ship and triggering a loss
 from space_invaders.game.scripting.control_actions.control_ship_action import ControlShipAction #this imports the ControlRacketAction class which manages the key input to control the racket for play - this will need to be converted to the control ship action which will move the ship left and right and fire bullets
@@ -70,11 +71,12 @@ class SceneManager:
     COLLIDE_BULLET_BORDERS_ACTION = CollideBulletBordersAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_ALIEN_BORDER_ACTION = CollideAlienBorderAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_ALIEN_ACTION = CollideAlienAction(PHYSICS_SERVICE, AUDIO_SERVICE)
+    COLLIDE_SBULLET_SBULLET_ACTION = CollideSbulletSbulletAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_SHIP_ACTION = CollideShipAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_SHIP_ALIEN_ACTION = CollideShipAlienAction(PHYSICS_SERVICE, AUDIO_SERVICE)
 
     #game control references
-    CONTROL_SHIP_ACTION = ControlShipAction(KEYBOARD_SERVICE)
+    CONTROL_SHIP_ACTION = ControlShipAction(KEYBOARD_SERVICE, AUDIO_SERVICE)
 
     #drawing/display references
     DRAW_BULLET_ACTION = DrawBulletAction(VIDEO_SERVICE)
@@ -95,7 +97,7 @@ class SceneManager:
 
     #FROM GREG
     MOVE_ALIEN_ACTION = MoveAlienAction()
-    ALIEN_BULLET_ACTION = AlienBulletAction()
+    ALIEN_BULLET_ACTION = AlienBulletAction(AUDIO_SERVICE)
 
     #game closing refernces
     RELEASE_DEVICES_ACTION = ReleaseDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
@@ -146,16 +148,16 @@ class SceneManager:
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
+        script.add_action(INPUT, self.CONTROL_SHIP_ACTION)
         self._add_output_script(script)
         script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
         
     def _prepare_try_again(self, cast, script):
-        self._add_aliens(cast)
-        self._add_ship(cast)
-        self._add_dialog(cast, PREP_TO_LAUNCH)
-
+        cast.clear_actors(ALIEN_BULLET_GROUP)
+        cast.clear_actors(SHIP_BULLET_GROUP)
         script.clear_actions(INPUT)
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
+        script.add_action(INPUT, self.CONTROL_SHIP_ACTION)
         self._add_update_script(script)
         self._add_output_script(script)
 
@@ -176,6 +178,8 @@ class SceneManager:
         script.clear_actions(UPDATE)
         self._add_output_script(script)
 
+        script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, GAME_OVER_SOUND))
+
     # ----------------------------------------------------------------------------------------------
     # casting methods
     # ----------------------------------------------------------------------------------------------
@@ -191,7 +195,7 @@ class SceneManager:
         cast.clear_actors(ALIEN_GROUP)
         
         stats = cast.get_first_actor(STATS_GROUP)
-        level = stats.get_level() % BASE_LEVELS
+        level = (stats.get_level()-1) % BASE_LEVELS + 1
         filename = LEVEL_FILE.format(level)
 
         with open(filename, 'r') as file:
@@ -203,6 +207,8 @@ class SceneManager:
                     x = (FIELD_LEFT + 1) + c * ALIEN_WIDTH
                     y = FIELD_TOP + r * ALIEN_HEIGHT
                     alien_type = column[0]
+                    if alien_type == 'z':
+                        continue
                     frames = int(column[1])
                     hitPoints = ALIEN_HITPOINTS
                     points = ALIEN_POINTS 
@@ -305,9 +311,9 @@ class SceneManager:
         script.add_action(UPDATE, self.ALIEN_BULLET_ACTION)#FROM GREG adding the alien bullet action to the script
         script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
         script.add_action(UPDATE, self.COLLIDE_ALIEN_BORDER_ACTION)
-        #script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
-        #script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
-        #script.add_action(UPDATE, self.COLLIDE_SHIP_ALIEN_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
+        script.add_action(UPDATE, self.COLLIDE_SHIP_ALIEN_ACTION)
         script.add_action(UPDATE, self.MOVE_ALIEN_ACTION)
         script.add_action(UPDATE, self.CHECK_OVER_ACTION)
         

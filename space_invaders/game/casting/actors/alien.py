@@ -66,8 +66,12 @@ class Alien(Actor):
         """Moves the alien down."""
         position = self._body.get_position()
         px = position.get_x()
-        py = position.get_y() + 6
+        py = position.get_y() + ALIEN_VELOCITY_Y
         position = Point(px, py)
         self._body.set_position(position)
+
+    def take_hit(self):
+        self._hitPoints -= 1
+        return self._hitPoints == 0
 
     

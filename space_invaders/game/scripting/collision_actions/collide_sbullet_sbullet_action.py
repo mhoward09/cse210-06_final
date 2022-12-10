@@ -6,8 +6,8 @@ from space_invaders.game.casting.sound import Sound #import sound class for play
 from space_invaders.game.scripting.action import Action #import action class as parent class
 
 
-class CollideAlienAction(Action):
-    '''checks for and resolves collisions between ship bullets and an alien
+class CollideSbulletSbulletAction(Action):
+    '''checks for and resolves collisions between ship bullets and ship bullets to prevent over lap of bullet collisions.
         
         Arguments:
             physics service: an instance of physics_service
@@ -18,18 +18,15 @@ class CollideAlienAction(Action):
         self._audio_service = audio_service #assigns _audio_service attribute from args
         
     def execute(self, cast, script, callback):
-        stats = cast.get_first_actor(STATS_GROUP)
         bullets = cast.get_actors(SHIP_BULLET_GROUP)
-        for bullet in bullets:
-            for alien in cast.get_actors(ALIEN_GROUP):
-                bullet_body = bullet.get_body()
-                alien_body = alien.get_body()
+        if len(bullets) > 1:
+            for i in range(len(bullets)):
+                for j in range(i+1,len(bullets)):
 
-                if self._physics_service.has_collided(bullet_body, alien_body):
-                    points = alien.get_points()
-                    stats.add_points(points)
-                    cast.remove_actor(SHIP_BULLET_GROUP, bullet)
-                    if alien.take_hit():
-                        cast.remove_actor(ALIEN_GROUP, alien)
-                    break
-                        
+                    bullet_1 = bullets[i]
+                    bullet_2 = bullets[j]
+                    bullet_body_1 = bullet_1.get_body()
+                    bullet_body_2 = bullet_2.get_body()
+
+                    if self._physics_service.has_collided(bullet_body_1, bullet_body_2):
+                        cast.remove_actor(SHIP_BULLET_GROUP, bullet_2)

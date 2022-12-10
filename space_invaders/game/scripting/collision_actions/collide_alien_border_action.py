@@ -17,21 +17,18 @@ class CollideAlienBorderAction(Action):
             position = body.get_position()
             x = position.get_x()
             y = position.get_y()
-            over_sound = Sound(OVER_SOUND)
 
-            if x <= FIELD_LEFT:
-                for alien in aliens:
-                    alien.move_down()
-            elif x >= (FIELD_RIGHT - ALIEN_WIDTH):
-                for alien in aliens:
-                    alien.move_down()
 
             if x <= FIELD_LEFT:
                 for alien in aliens:
                     alien.reverse_x()
+                    alien.move_down()
+                break
             elif x >= (FIELD_RIGHT - ALIEN_WIDTH):
                 for alien in aliens:
                     alien.reverse_x()
+                    alien.move_down()
+                break
 
             if y >= (FIELD_BOTTOM - ALIEN_WIDTH):
                 stats = cast.get_first_actor(STATS_GROUP)
@@ -41,4 +38,4 @@ class CollideAlienBorderAction(Action):
                     callback.on_next(TRY_AGAIN) 
                 else:
                     callback.on_next(GAME_OVER)
-                    self._audio_service.play_sound(over_sound)
+                break

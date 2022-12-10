@@ -11,7 +11,7 @@ class RaylibPhysicsService(PhysicsService):
         subject_rectangle = self._get_rectangle(subject)
         agent_rectangle = self._get_rectangle(agent)
         return pyray.check_collision_recs(subject_rectangle, agent_rectangle)
-
+    
     def is_above(self, subject, agent):
         subject_rectangle = self._get_rectangle(subject)
         agent_rectangle = self._get_rectangle(agent)
