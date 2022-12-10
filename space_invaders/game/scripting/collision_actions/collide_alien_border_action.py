@@ -20,15 +20,18 @@ class CollideAlienBorderAction(Action):
             over_sound = Sound(OVER_SOUND)
 
             if x <= FIELD_LEFT:
-                alien.move_down()
+                for alien in aliens:
+                    alien.move_down()
             elif x >= (FIELD_RIGHT - ALIEN_WIDTH):
-                alien.move_down()
+                for alien in aliens:
+                    alien.move_down()
 
             if x <= FIELD_LEFT:
-                alien.reverse_x()
-
+                for alien in aliens:
+                    alien.reverse_x()
             elif x >= (FIELD_RIGHT - ALIEN_WIDTH):
-                alien.reverse_x()
+                for alien in aliens:
+                    alien.reverse_x()
 
             if y >= (FIELD_BOTTOM - ALIEN_WIDTH):
                 stats = cast.get_first_actor(STATS_GROUP)

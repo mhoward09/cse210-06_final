@@ -18,7 +18,6 @@ from space_invaders.game.scripting.collision_actions.collide_bullet_borders_acti
 from space_invaders.game.scripting.collision_actions.collide_alien_border_action import CollideAlienBorderAction
 from space_invaders.game.scripting.collision_actions.collide_alien_action import CollideAlienAction #imports the CollideBrickAction class which detects if the ball hits a brick causing the ball to bounce the brick to be removed and the points to be added to the score - we will not need the bounce but score will need to be added and alien/brick removed upon the collision of a bullet with an alien
 from space_invaders.game.scripting.collision_actions.collide_ship_alien_action import CollideShipAlienAction
-from space_invaders.game.scripting.collision_actions.collide_alien_alien_action import CollideAlienAlienAction
 from space_invaders.game.scripting.collision_actions.collide_ship_action import CollideShipAction #imports the CollideRacketAction which handles the ball hitting the racket and bouncing - this will be adjusted to a bullet hitting the ship and triggering a loss
 from space_invaders.game.scripting.control_actions.control_ship_action import ControlShipAction #this imports the ControlRacketAction class which manages the key input to control the racket for play - this will need to be converted to the control ship action which will move the ship left and right and fire bullets
 
@@ -73,7 +72,7 @@ class SceneManager:
     COLLIDE_ALIEN_ACTION = CollideAlienAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_SHIP_ACTION = CollideShipAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     COLLIDE_SHIP_ALIEN_ACTION = CollideShipAlienAction(PHYSICS_SERVICE, AUDIO_SERVICE)
-    COLLIDE_ALIEN_ALIEN_ACTION = CollideAlienAlienAction(PHYSICS_SERVICE)
+
     #game control references
     CONTROL_SHIP_ACTION = ControlShipAction(KEYBOARD_SERVICE)
 
@@ -306,7 +305,6 @@ class SceneManager:
         script.add_action(UPDATE, self.ALIEN_BULLET_ACTION)#FROM GREG adding the alien bullet action to the script
         script.add_action(UPDATE, self.COLLIDE_BULLET_BORDERS_ACTION)
         script.add_action(UPDATE, self.COLLIDE_ALIEN_BORDER_ACTION)
-        script.add_action(UPDATE, self.COLLIDE_ALIEN_ALIEN_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_ALIEN_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
         #script.add_action(UPDATE, self.COLLIDE_SHIP_ALIEN_ACTION)
